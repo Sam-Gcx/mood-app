@@ -22,6 +22,7 @@ module.exports = {
     "max-len":["warn", {"code":80}],
     "semi":["error", "always"],
     "react/react-in-jsx-scope":"off",
+    "react/prop-types":"off"
   },
   settings:{
     react:{

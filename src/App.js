@@ -1,23 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import MoodList from './components/MoodList';
+import MoodForm from './components/MoodForm';
+import { useEffect, useState } from 'react';
 
 function App() {
+  const [moods, setMoods] = useState(() => {
+    const saved = localStorage.getItem('moods');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('moods', JSON.stringify(moods));
+  }, [moods]);
+
+  const addMood = (newMood) => {
+    setMoods([newMood, ...moods]);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Mood Tracker</h1>
+      <MoodForm onAddMood={addMood} />
+      <MoodList moods={moods} />
     </div>
   );
 }
